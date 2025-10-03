@@ -280,7 +280,7 @@ modeun nari pposong pposonghae joha`,
   },
   {
     id: 5,
-    title: "an't Breakup Girl Can't Breakaway Boy",
+    title: "Can't Breakup Girl Can't Breakaway Boy",
     artist: "Lee Sang",
     album: "",
     albumArtUrl:
@@ -422,19 +422,18 @@ let repeatMode = 0; // 0: no repeat, 1: repeat one, 2: repeat all
 // --- Page Navigation ---
 function showHomePage() {
   playerPage.classList.remove("active");
-  songDetailPage.classList.remove("active"); // Pastikan detail page disembunyikan
+  songDetailPage.classList.remove("active"); 
   homePage.classList.add("active");
 
   bodyElement.classList.remove("player-active-bg");
   bodyElement.classList.remove("detail-active-bg");
-  backgroundVideoContainer.classList.remove("active"); // Sembunyikan video background
-  backgroundVideo.pause(); // Jeda video background
-  backgroundVideo.src = ""; // Kosongkan src video
+  backgroundVideoContainer.classList.remove("active"); 
+  backgroundVideo.pause(); 
+  backgroundVideo.src = ""; 
   backgroundVideo.load();
-  pauseTrack(); // Jeda musik saat kembali ke home
+  pauseTrack(); 
 }
 
-// Fungsi untuk menampilkan halaman detail lagu (tetap dipertahankan, tapi tidak dipanggil dari song list click)
 function showSongDetailPage(song) {
   homePage.classList.remove("active");
   playerPage.classList.remove("active");
@@ -448,8 +447,8 @@ function showSongDetailPage(song) {
   bodyElement.classList.remove("player-active-bg");
   bodyElement.classList.add("detail-active-bg");
   backgroundVideoContainer.classList.remove("active");
-  backgroundVideo.pause(); // Jeda video background
-  backgroundVideo.src = ""; // Kosongkan src video
+  backgroundVideo.pause(); 
+  backgroundVideo.src = ""; 
   backgroundVideo.load();
 }
 
@@ -460,7 +459,7 @@ function showPlayerPage() {
 
   bodyElement.classList.remove("detail-active-bg");
   bodyElement.classList.add("player-active-bg");
-  backgroundVideoContainer.classList.add("active"); // Tampilkan video background
+  backgroundVideoContainer.classList.add("active"); 
 
   const currentSong = songs[currentSongIndex];
   if (currentSong && currentSong.videoBgSrc) {
@@ -471,7 +470,7 @@ function showPlayerPage() {
       .catch((e) => console.error("Error playing video background:", e));
   } else {
     backgroundVideo.src = "";
-    backgroundVideo.load(); // Kosongkan src jika tidak ada video khusus
+    backgroundVideo.load(); 
   }
 }
 
@@ -493,18 +492,13 @@ function renderSongList() {
                 <p>${song.artist}</p>
             </div>
         `;
-    // --- Perubahan Penting di sini ---
-    // Saat item lagu diklik, langsung muat & putar lagu lalu tampilkan halaman player
     listItem.addEventListener("click", () => {
       currentSongIndex = index;
       loadSong(songs[currentSongIndex]);
       playTrack();
-      showPlayerPage(); // Langsung pindah ke halaman pemutar musik
+      showPlayerPage(); 
     });
-
-    // Event listener untuk hover
     listItem.addEventListener("mouseenter", () => {
-      // Hanya aktifkan video background jika kita di halaman home
       if (homePage.classList.contains("active") && song.videoBgSrc) {
         backgroundVideo.src = song.videoBgSrc;
         backgroundVideo.load();
@@ -512,15 +506,14 @@ function renderSongList() {
         backgroundVideo
           .play()
           .catch((e) => console.error("Error playing video on hover:", e));
-        bodyElement.classList.add("player-active-bg"); // Tambahkan kelas untuk warna background body
+        bodyElement.classList.add("player-active-bg"); 
       }
     });
     listItem.addEventListener("mouseleave", () => {
-      // Sembunyikan video background hanya jika kita di halaman home
       if (homePage.classList.contains("active")) {
         backgroundVideoContainer.classList.remove("active");
-        backgroundVideo.pause(); // Jeda video saat mouse meninggalkan
-        backgroundVideo.src = ""; // Kosongkan src agar tidak memutar di background
+        backgroundVideo.pause(); 
+        backgroundVideo.src = ""; 
         backgroundVideo.load();
         bodyElement.classList.remove("player-active-bg");
       }
